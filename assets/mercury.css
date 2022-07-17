@@ -1,0 +1,88 @@
+/*
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+*/
+
+*,
+::before,
+::after {
+  font-size: 12px;
+  /*font-family: 'Inconsolata';*/
+}
+
+html {
+  line-height: 17px;
+}
+:root {
+  --frame-w: 100px;
+  --frame-h: 100px;
+  --border: 1px solid #ccc;
+  --bg: #f1f3f4;
+}
+/*
+a {
+  color: #007fff;
+}
+a:hover {
+  color: #005ddd;    relative calc(100vh - 56px);
+}
+    border-top:1px solid green;
+*/
+
+
+#merc-db {
+  min-height: calc(100vh - 56px);
+  background: url(../?_svg=corner);
+  position:relative;
+}
+
+#merc-db .other-task {
+    position:sticky;
+    top:0px;
+    width:65px;
+    background-color: #000;
+    color: #f472b6;
+}
+
+.my-table {
+    display:table;
+    position: absolute;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    background-color: #eee;
+    border:1px solid peru;
+    z-index: 1;
+}
+.tbl-name {
+    background-color: peru;
+    color: #fff;
+    min-width: 90px;
+    line-height: 16px;
+}
+div.my-table[active] .tbl-name {
+    background-color: blue;
+}
+div.my-table[active] {
+    background-color: #bfdbfe;
+    border: 1px solid blue;
+    z-index: 777;
+}
+.my-table div {
+    padding: 0 3px;
+}
+.tbl-coln {
+    border-top:1px dashed peru;
+    height: 17px;
+    position: relative;
+    z-index: 1;
+}
+.tbl-coln[active] {
+    background-color: #93c5fd;
+    border-top: 1px solid blue;
+    z-index: 777;
+}
+.drop-col {
+  margin-right:2px;
+}
+.drop-col:hover {
+  background-color:pink;
+}
+

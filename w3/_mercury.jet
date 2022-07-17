@@ -1,0 +1,55 @@
+#.jet core
+
+#.db //////////////////////////////////////////////////////////////////////////////
+#use(.menu)
+<div id="merc-db">
+#.alter.drop.create
+<div class="other-task" onmousedown="my.hole=1">Hole</div>
+@loop($e_tables)
+<div class="my-table">
+  <div class="tbl-name">
+    {{$row->table}}
+  </div>
+  @loop($row->col as $name => $col)
+    <div class="tbl-coln">
+      <a href="#" class="drop-col"><img src="_svg?x"></a>@eat
+      {{$name}}
+    </div>
+  ~loop
+</div>
+~loop
+#.alter.drop.create
+</div>
+#.db
+
+
+#.ctrl //////////////////////////////////////////////////////////////////////////////
+#use(.menu)
+
+#.ctrl
+
+
+#.mod //////////////////////////////////////////////////////////////////////////////
+#use(.menu)
+#use(`<h4>MERCURY TEST</h4>` as header)
+<h1>{{11}}</h1>
+222
+<div style="padding:10px 0 0 10px">
+<fieldset><legend>{{$_SERVER['REMOTE_ADDR']}}</legend>
+777777777777777
+</fieldset>
+</div>
+#.mod
+
+#.wizard //////////////////////////////////////////////////////////////////////////////
+#use(.menu)
+
+#.wizard.menu ------------------------------------------------------------------------------
+#use(`<h4>MERCURY DEVELOPMENT</h4>` as header)
+<br><div class="other-task">Mercury</div>
+@loop($y_menu as $uri => $name)
+    <a href="_mercury?{{$uri}}" class="inner-menu"@active($uri == $sky->_1)>{{$name}}</a>
+~loop
+<script>my.page='';</script>
+<pre id="my-pre">Mercury</pre>
+#.menu

@@ -1,0 +1,2 @@
+This application contain a set of tools to
+create PHP code for SKY-application skeleton of different types from the scratch
