@@ -9,7 +9,7 @@ class mercury_c extends Controller
         if (!MVC::$layout)
             return;
         $y = parent::tail_y();
-        $this->k_static = [[], ["~/dev.js", "~/mercury.js"], ["~/dev.css", "~/mercury.css"]];
+        $this->k_static = [[], ["~/m/dev.js", "~/m/mercury.js"], ["~/m/dev.css", "~/m/mercury.css"]];
         return $y + ['menu' => [
             'db' => 'Database',
             'ctrl' => 'Controllers',
