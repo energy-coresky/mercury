@@ -1,26 +1,35 @@
 #.jet core
 
-#.db //////////////////////////////////////////////////////////////////////////////
+#.db ////////////////////////////////////////////////////////////////////////////// <a @href(;;) class="plus-col"><img src="_svg?p"></a>
 #use(.menu)
+#use(.merc)
 <div id="merc-db">
-#.alter.drop.create
+#.create.drop.sort.dc.alter
 <div class="other-task" onmousedown="my.hole=1">Hole</div>
 @loop($e_tables)
 <div class="my-table">
   <div class="tbl-name">
-    {{$row->table}}
+    <div>{{$row->table}}</div>
+    <div @href(;;) class="">?</div>
   </div>
   @loop($row->col as $name => $col)
     <div class="tbl-coln">
-      <a href="#" class="drop-col"><img src="_svg?x"></a>@eat
-      {{$name}}
+      <a @href(my.drop_add('&tbl={{$row->table}}&n={{$_2}}')) class="da-col"><img src="_svg?p"></a>@eat
+      <div>{{$name}}</div>
     </div>
   ~loop
 </div>
 ~loop
-#.alter.drop.create
+#.create.drop.sort.dc.alter
 </div>
-#.db
+#.db.merc ------------------------------------------------------------------------------
+<div class="bg-g bb">
+  <label><input type="checkbox" onclick="my.drop_rename(this,1)"> drop column</label>
+</div>
+<div class="bg-g bb">
+  <label><input type="checkbox" onclick="my.drop_rename(this,0)"> rename column/table</label>
+</div>
+#.merc
 
 
 #.ctrl //////////////////////////////////////////////////////////////////////////////
@@ -31,7 +40,7 @@
 
 #.mod //////////////////////////////////////////////////////////////////////////////
 #use(.menu)
-#use(`<h4>MERCURY TEST</h4>` as header)
+#use(`<h4>MERCURY MODELS</h4>` as header)
 <h1>{{11}}</h1>
 222
 <div style="padding:10px 0 0 10px">
@@ -50,6 +59,7 @@
 @loop($y_menu as $uri => $name)
     <a href="_mercury?{{$uri}}" class="inner-menu"@active($uri == $sky->_1)>{{$name}}</a>
 ~loop
+@block(`` as merc)
 <script>my.page='';</script>
-<pre id="my-pre">Mercury</pre>
+<pre id="my-pre">---</pre>
 #.menu

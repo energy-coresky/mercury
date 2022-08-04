@@ -52,6 +52,7 @@ a:hover {
     z-index: 1;
 }
 .tbl-name {
+    display:flex;
     background-color: peru;
     color: #fff;
     min-width: 90px;
@@ -69,6 +70,7 @@ div.my-table[active] {
     padding: 0 3px;
 }
 .tbl-coln {
+    display:flex;
     border-top:1px dashed peru;
     height: 17px;
     position: relative;
@@ -79,10 +81,12 @@ div.my-table[active] {
     border-top: 1px solid blue;
     z-index: 777;
 }
-.drop-col {
+.da-col {
   margin-right:2px;
 }
-.drop-col:hover {
-  background-color:pink;
+.da-col:hover {
+  background-color:#fff;
 }
+
+
 

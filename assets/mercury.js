@@ -18,10 +18,27 @@ var my = {
     hole: 0,
     tables: [],
     tbl: (t) => {
-        var name = $.trim(t.find('div:eq(0)').html())
+        var name = $.trim(t.find('div.tbl-name div:eq(0)').html())
         return name
     },
-    database: function (tbl, i, act) {
+    drop_add: (tbl_n) => {
+        if (my.is_drop)
+            return ajax('dc' + tbl_n, my.draw)
+        ajax('ac' + tbl_n, {}, my.draw)
+    },
+    is_drop: 0,
+    is_rename: 0,
+    drop_rename: (el, drop) => {
+        var is = $(el).is(':checked');
+        $(el).parent().parent().removeClass(is ? 'bg-g' : 'bg-r').addClass(is ? 'bg-r' : 'bg-g')
+        if (drop) {
+            my.is_drop = is
+            $('.tbl-coln a').html(is ? '<img src="_svg?x">' : '<img src="_svg?p">')
+        } else {
+            my.is_rename = is
+        }
+    },
+    database: (tbl, i, act) => {
         $('*').attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
 
         var move = 0, sort = 0, xpos, ypos, nt = tbl, clk_title = (e, col, nt2) => {
@@ -98,9 +115,8 @@ var my = {
                     ajax('drop', {tbl: my.tbl(tbl)}, my.draw);
                 }
             } else if (sort) {
-                sort[2] = my.tbl(tbl);
                 if (sort[0] != sort[1])
-                    ajax('alter', {sort:sort}, my.draw);
+                    ajax('sort&tbl=' + my.tbl(tbl), {sort:sort}, my.draw);
             }
             if (2 == my.hole) {
                 if (xpos < 68 && ypos < 35) {
@@ -118,7 +134,7 @@ var my = {
             $('#merc-db').html(r)
     //$('#my-pre').text(my.path)
         var len = 0;
-        $.map($.makeArray($('.tbl-name')), (n, i) => {
+        $.map($.makeArray($('.tbl-name div')), (n, i) => {
             my.tables[$.trim(n.innerHTML)] = len = i;
         });
         $('.my-table').each((i, el) => {
