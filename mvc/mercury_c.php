@@ -65,12 +65,12 @@ class mercury_c extends Controller
         return $this->a_db();
     }
 
-    function j_sort() {
+    function j_sort() { # sort columns
         $this->m_merc->sort($_GET['tbl'], $_POST['sort'][0], $_POST['sort'][1]);
         return $this->a_db();
     }
 
-    function j_ac() { # drop column
+    function j_ac() { # add column
         $this->m_merc->ac($_GET['tbl'], $_GET['n'], $_POST['tbl'], $_POST['n']);
         return $this->a_db();
     }
@@ -82,10 +82,6 @@ class mercury_c extends Controller
 
     function j_rc() { # rename column
         $this->m_merc->rc($_GET['tbl'], $_POST['from'], $_POST['to']);
-        return $this->a_db();
-    }
-
-    function j_alter() {
         return $this->a_db();
     }
 
