@@ -2,27 +2,36 @@
 
 #.db ////////////////////////////////////////////////////////////////////////////// <a @href(;;) class="plus-col"><img src="_svg?p"></a>
 #use(.menu)
+#use(`<h4>MERCURY DATABASES ({{count($databases)}}) @inc(.select)</h4>` as header)
 #use(.merc)
 <div id="merc-db">
-#.create.drop.sort.dc.alter
+#.create.drop.rename.sort.ac.dc.rc
 <div class="other-task" onmousedown="my.hole=1">Hole</div>
 @loop($e_tables)
-<div class="my-table">
+<div class="my-table" t="{{$row->table}}">
   <div class="tbl-name">
-    <div>{{$row->table}}</div>
-    <div @href(;;) class="">?</div>
+    <div class="my-rnm">{{$row->table}}</div>
+    <div onclick="ajax('info&tbl={{$row->table}}',{},'my-pre')" class="tbl-q">?</div>
   </div>
   @loop($row->col as $name => $col)
-    <div class="tbl-coln">
-      <a @href(my.drop_add('&tbl={{$row->table}}&n={{$_2}}')) class="da-col"><img src="_svg?p"></a>@eat
-      <div>{{$name}}</div>
+    <div class="tbl-coln" n="{{$_2}}">
+      <a href="javascript:;" onmousedown="my.drop_add('&tbl={{$row->table}}&n={{$_2}}',my.active)" class="da-col"></a>@eat
+      <div class="my-rnm">{{$name}}</div>
     </div>
   ~loop
 </div>
 ~loop
-#.create.drop.sort.dc.alter
+#.create.drop.rename.sort.ac.dc.rc
 </div>
-#.db.merc ------------------------------------------------------------------------------
+#.db.select
+<select onchange="location.href='?db='+$(this).val()">
+@loop($databases as $one)<option value="{{$one}}"@selected($one==$sky->_2)>{{$one}}</option>~loop
+</select>
+({{$driver}})
+#.select.merc ------------------------------------------------------------------------------
+<div class="bg-y bb">
+  <label><input type="checkbox"@checked($sky->w_save_migration) onclick="ajax('mig&on='+($(this).is(':checked')?1:0))"> save migration</label>
+</div>
 <div class="bg-g bb">
   <label><input type="checkbox" onclick="my.drop_rename(this,1)"> drop column</label>
 </div>
@@ -61,5 +70,5 @@
 ~loop
 @block(`` as merc)
 <script>my.page='';</script>
-<pre id="my-pre">---</pre>
+<div id="my-pre"></div>
 #.menu

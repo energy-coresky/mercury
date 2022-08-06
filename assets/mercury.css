@@ -87,6 +87,23 @@ div.my-table[active] {
 .da-col:hover {
   background-color:#fff;
 }
-
-
+.tbl-q:hover {
+  background-color:blue;
+}
+#my-pre {
+  background-color: #ffd;
+  display:table;
+  position:relative;
+  z-index:299 !important;
+}
+#my-pre:hover {
+  position:absolute;
+  bottom:0;
+}
+.tbl-name .my-ract {
+  color:yellow;
+}
+.tbl-coln .my-ract {
+  color:peru;
+}
 

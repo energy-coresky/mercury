@@ -21,10 +21,12 @@ var my = {
         var name = $.trim(t.find('div.tbl-name div:eq(0)').html())
         return name
     },
-    drop_add: (tbl_n) => {
+    is_add: 0,
+    drop_add: (tbl_n, act) => {
         if (my.is_drop)
             return ajax('dc' + tbl_n, my.draw)
-        ajax('ac' + tbl_n, {}, my.draw)
+        my.is_add = 1;
+        ajax('ac' + tbl_n, {tbl:my.tbl(act[0]), n:act[1].attr('n')}, my.draw)
     },
     is_drop: 0,
     is_rename: 0,
@@ -36,10 +38,14 @@ var my = {
             $('.tbl-coln a').html(is ? '<img src="_svg?x">' : '<img src="_svg?p">')
         } else {
             my.is_rename = is
+            is ? $('.my-rnm').addClass('my-ract') : $('.my-rnm').removeClass('my-ract')
+            $('*').attr('unselectable', is ? 'off' : 'on').css('user-select', is ? '' : 'none');
         }
     },
     database: (tbl, i, act) => {
-        $('*').attr('unselectable', 'on').css('user-select', 'none').on('selectstart', false);
+        var is = my.is_rename
+        $('*').attr('unselectable', is ? 'off' : 'on').css('user-select', is ? '' : 'none');
+        //$('*').attr('unselectable', 'on').css('user-select', 'none');//.on('selectstart', false);
 
         var move = 0, sort = 0, xpos, ypos, nt = tbl, clk_title = (e, col, nt2) => {
             $('.my-table').removeAttr('active');
@@ -63,16 +69,31 @@ var my = {
         };
         if (i == act)
             clk_title();
-        tbl.find('div:eq(0)').mousedown(clk_title)
-            .on('contextmenu', (e) => {
-                //return false;
-            });
+        tbl.find('div:eq(0)').mousedown(function(e) {
+            if (my.is_rename) {
+                var el = $(this).find('.my-rnm');
+                my.is_rename = [0, el, el.text()]; // 0-table
+                el.attr('contenteditable', 'true').focus()
+            }
+            clk_title(e)
+        }).on('contextmenu', (e) => {
+            return false;
+        });
         tbl.find('.tbl-coln').mousedown(function(e) {
+            if (my.is_add)
+                return my.is_add = 0;
             clk_title(0, $(this));
-            ypos = e.pageY;
-            for (var q, n, i = 0; q = tbl.find('.tbl-coln:eq(' + i + ')')[0]; i++)
-                this !== q || (n = i);
-            sort = [n, n, 17 * (i - n - 1)];
+            if (my.is_rename) {
+                var el = $(this).find('.my-rnm');
+                my.is_rename = [1, el, el.text()]; // 1-column
+                el.attr('contenteditable', 'true').focus()
+               // el//.css('background', sky.bg).html(text);
+            } else { // sort columns
+                ypos = e.pageY;
+                for (var q, n, i = 0; q = tbl.find('.tbl-coln:eq(' + i + ')')[0]; i++)
+                    this !== q || (n = i);
+                sort = [n, n, 17 * (i - n - 1)];
+            }
         });
         $('body').on('mousemove', (e) => {
             if (move) {
@@ -102,7 +123,17 @@ var my = {
                 clk_title(e, 0, tbl2);
             }
         }).on('mouseup', (e) => {
-            if (move) {
+            if (my.is_rename) {
+                if (true !== my.is_rename) {
+                    var a = my.is_rename, t = my.tbl(my.active[0]);
+                    if (a[2] != a[1].text()) {
+                        a[0]
+                            ? ajax('rc&tbl=' + t, {from:a[2], to:a[1].text()}, my.draw)
+                            : ajax('rename&tbl=' + a[2] + '&to=' + t, {}, my.draw);
+                        my.is_rename = true;
+                    }
+                }
+            } else if (move) {
                 var left = (e.pageX + xpos) % 17, top = (e.pageY + ypos) % 17;
                 xpos += e.pageX + (left < 9 ? -left : (17 - left));
                 ypos += e.pageY + (top < 9 ? -top : (17 - top));
@@ -132,10 +163,14 @@ var my = {
     draw: (r) => {
         if (r)
             $('#merc-db').html(r)
-    //$('#my-pre').text(my.path)
+        $('.tbl-coln a').html(my.is_drop ? '<img src="_svg?x">' : '<img src="_svg?p">')
+        if (my.is_rename)
+            $('.my-rnm').addClass('my-ract');
+            
         var len = 0;
-        $.map($.makeArray($('.tbl-name div')), (n, i) => {
-            my.tables[$.trim(n.innerHTML)] = len = i;
+        $.map($.makeArray($('.tbl-name')), (n, i) => {
+            my.tables[$(n).children(':eq(0)').html()] = len = i;
+            //$('#my-pre').html()
         });
         $('.my-table').each((i, el) => {
             var act = V('act_t') || 0;
