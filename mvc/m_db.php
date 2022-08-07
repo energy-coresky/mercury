@@ -1,6 +1,6 @@
 <?php
 
-class m_merc extends Model_m
+class m_db extends Model_m
 {
     function head_y() {
         $name = 'main' == $this->d_merc_db ? '' : $this->d_merc_db;
@@ -10,8 +10,12 @@ class m_merc extends Model_m
         return $dd;
     }
 
+    function cut_pref($tbl) {
+        return substr($tbl, strlen($this->dd->pref));
+    }
+
     function struct($tbl, &$new = false, &$orig = false) {
-        $ary = $this->dd->_struct(substr($tbl, strlen($this->dd->pref)));
+        $ary = $this->dd->_struct($this->cut_pref($tbl));
         if (false === $new)
             return $ary;
         if (false !== $orig)
@@ -112,15 +116,15 @@ class m_merc extends Model_m
         $this->sql("ALTER TABLE $q$tbl$q CHANGE $q$from$q $q$to$q$def");
     }
 
-    function tables() {
+    function tables($struct = true) {
         $list = $this->dd->_tables();
         return [
-            'row_c' => function () use (&$list) {
+            'row_c' => function () use (&$list, $struct) {
                 if (!$list)
                     return false;
                 return [
                     'table' => $tbl = array_shift($list),
-                    'col' => $this->struct($tbl),
+                    'col' => $struct ? $this->struct($tbl) : $this->m_fs->fromdb($tbl),
                 ];
             },
         ];

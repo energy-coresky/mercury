@@ -1,6 +1,6 @@
 #.jet core
 
-#.db ////////////////////////////////////////////////////////////////////////////// <a @href(;;) class="plus-col"><img src="_svg?p"></a>
+#.db //////////////////////////////////////////////////////////////////////////////
 #use(.menu)
 #use(`<h4>MERCURY DATABASES ({{count($databases)}}) @inc(.select)</h4>` as header)
 #use(.merc)
@@ -11,7 +11,7 @@
 <div class="my-table" t="{{$row->table}}">
   <div class="tbl-name">
     <div class="my-rnm">{{$row->table}}</div>
-    <div onclick="ajax('info&tbl={{$row->table}}',{},'my-pre')" class="tbl-q">?</div>
+    <div class="tbl-q" onclick="ajax('info&tbl={{$row->table}}',{},'my-pre')">?</div>
   </div>
   @loop($row->col as $name => $col)
     <div class="tbl-coln" n="{{$_2}}">
@@ -23,7 +23,7 @@
 ~loop
 #.create.drop.rename.sort.ac.dc.rc
 </div>
-#.db.select
+#.db.select ------------------------------------------------------------------------------
 <select onchange="location.href='?db='+$(this).val()">
 @loop($databases as $one)<option value="{{$one}}"@selected($one==$sky->_2)>{{$one}}</option>~loop
 </select>
@@ -41,34 +41,26 @@
 #.merc
 
 
-#.ctrl //////////////////////////////////////////////////////////////////////////////
-#use(.menu)
-
-#.ctrl
-
-
-#.mod //////////////////////////////////////////////////////////////////////////////
-#use(.menu)
-#use(`<h4>MERCURY MODELS</h4>` as header)
-<h1>{{11}}</h1>
-222
-<div style="padding:10px 0 0 10px">
-<fieldset><legend>{{$_SERVER['REMOTE_ADDR']}}</legend>
-777777777777777
-</fieldset>
-</div>
-#.mod
-
 #.wizard //////////////////////////////////////////////////////////////////////////////
 #use(.menu)
+#use(`<h4>MERCURY WIZARD</h4>` as header)
+@inc(_wz.first)
+#.wizard
 
-#.wizard.menu ------------------------------------------------------------------------------
-#use(`<h4>MERCURY DEVELOPMENT</h4>` as header)
+
+#.fs ////////////////////////////////////////////////////////////////////////////// <script>ajax('fs.test.qqq222',alert)</script>
+#use(.menu)
+#use(`<h4>MERCURY FILES</h4>` as header)
+@inc(_fs.list)
+#.fs.menu ------------------------------------------------------------------------------
 <br><div class="other-task">Mercury</div>
 @loop($y_menu as $uri => $name)
-    <a href="_mercury?{{$uri}}" class="inner-menu"@active($uri == $sky->_1)>{{$name}}</a>
+  <a href="_mercury?{{$uri}}" class="inner-menu"@active(explode('=',$uri)[0] == $sky->_1)>{{$name}}</a>
 ~loop
 @block(`` as merc)
 <script>my.page='';</script>
 <div id="my-pre"></div>
 #.menu
+
+
+

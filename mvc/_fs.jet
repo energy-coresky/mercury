@@ -1,0 +1,66 @@
+#.jet core
+
+#.test //////////////////////////////////////////////////////////////////////////////
+<div style="padding:10px 0 0 10px">
+<fieldset><legend>{{$q.$_SERVER['REMOTE_ADDR']}}</legend>
+  777777777777777
+</fieldset>
+</div>
+#.test
+
+#.list //////////////////////////////////////////////////////////////////////////////
+<div id="my-files">
+#.hide.show
+<table width="55%">
+<tr>
+  <th colspan="6" style="text-align:center">MVC Files ({{$sky->d_merc_db ?: 'main'}} database connection)</th>
+</tr>
+<tr>
+  <th>Table</th><th>Controller</th><th>Template</th><th>Model T</th><th>Model M</th><th></th>
+</tr>
+@loop($e_tables)
+@continue($e_tables->func($row->table, $row->col[0]))
+#.mvc
+<tr>
+  <td>{{$row->table}}</td>
+  @loop($row->col[0] as $fs)<td class="@if('-'!=$fs[0])my-file~if@if($fs[1]) bg-g~if">{{$fs[0]}}</td>~loop
+  <td>@if($row->col[1])<a @href(ajax('fs.hide.{{$row->table}}',{},'my-files'))>hide</a>~if</td>
+</tr>
+#.mvc
+~loop
+<tr>
+  <td colspan="6" bgcolor="#ffd">Hidden:
+    @loop($hidden as $v)
+      @if($_)|~if <a @href(ajax('fs.show.{{$v}}',{},'my-files'))>{{$v}}</a>
+    ~loop
+  </td>
+</tr>
+@loop($e_mvc)@inc(.mvc)~loop
+
+<tr>
+  <td></td>@loop($_ < 4)<td><input size="8" style="display:none"> <a @href()>add new</a></td>~loop
+  <td><button style="display:none">add</button></td>
+</tr>
+<tr>
+  <th colspan="6" style="text-align:center">Other JET Files</th>
+</tr>
+</table>
+
+<br><table width="55%">
+<tr>
+  <th colspan="6" style="text-align:center">Wing3 & other Files</th>
+</tr>
+<tr>
+  <td></td><td>w3/app.php</td>
+  <td></td><td>-</td><td>-</td><td></td>
+</tr>
+</table>
+<br><br><br>
+@dump(m_fs::$mvc)
+@dump(m_fs::$view)
+@dump(m_fs::$ok)
+<br><br><br>
+#.hide.show
+</div>
+#.list
+
