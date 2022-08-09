@@ -16,9 +16,9 @@ class mercury_c extends Controller
         $y = parent::tail_y();
         $this->k_static = [[], ["~/m/dev.js", "~/m/mercury.js"], ["~/m/dev.css", "~/m/mercury.css"]];
         return $y + ['menu' => [
+            'wizard' => 'Wizard',
             'db=' . ($this->d_merc_db ?: 'main') => 'Databases',
             'fs' => 'Files',
-            'wizard' => 'Wizard',
         ]];
     }
 
@@ -81,31 +81,21 @@ class mercury_c extends Controller
     }
 
     function default_j() {
-        $ary = explode('.', $this->_1, 3);
-        MVC::body("$ary[0].$ary[1]");
+        $in = explode('.', $this->_1);
+        MVC::body("$in[0].$in[1]");
         $this->nref = true;
-        return $this->{"s_$ary[1]"}($ary[2] ?? 0);
+        $r = call_user_func_array([$this->m_fs, "j_$in[1]"], array_pad(array_slice($in, 2), 5, ''));
+        return null === $r ? $this->a_fs() : $r;
     }
     # === FILES ======================================================================
     function a_fs() {
         return [
             'e_mvc' => $this->m_fs->mvc(),
+            'e_view' => $this->m_fs->view(),
+            'e_other' => $this->m_fs->other(),
             'e_tables' => $this->m_fs->tables($hidden),
             'hidden' => $hidden,
         ];
-    }
-
-    function s_show($tbl) {
-        return $this->s_hide($tbl, 1);
-    }
-
-    function s_hide($tbl, $show = 0) {
-        $h = $this->d_merc_hidden;
-        $h = $h ? explode(' ', $h) : [];
-        $show ? ($h = array_diff($h, [$tbl])) : ($h[] = $tbl);
-        $this->d_merc_hidden = implode(' ', $h);
-        SKY::d('merc_hidden', implode(' ', $h));
-        return $this->a_fs();
     }
 
 

@@ -106,7 +106,12 @@ div.my-table[active] {
 .tbl-coln .my-ract {
   color:peru;
 }
+
 .my-file:hover {
   background-color: #e0e7ff;
   cursor: default;
 }
+#my-files {
+  display:flex;
+}
+

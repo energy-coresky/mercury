@@ -180,6 +180,16 @@ var my = {
                 act = 0;
             my.database($(el).css({left:x + 'px', top:y + 'px'}), i, act);
         });
+    },
+    files: () => {
+        $('#my-files .my-file').click(function() {
+            let rest = $(this).attr('x') + '.' + $(this).text();
+            ajax('fs.open.0.' + rest, {}, 'my-files');
+        });
+    },
+    keyup: (el) => {
+        let s = $(el).val();
+        $(el).prev().find('strong').html(s);
     }
 };
 

@@ -5,7 +5,7 @@ $plans = [
     'cfg' => ['path' => __DIR__ . '/mvc'],
     'app' => [
         'type' => 'dev',
-        'require' => 'Parsedown SQLite3',
+        'require' => 'SQLite3',
     ],
 ];
 

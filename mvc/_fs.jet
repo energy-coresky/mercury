@@ -1,17 +1,24 @@
 #.jet core
 
-#.test //////////////////////////////////////////////////////////////////////////////
-<div style="padding:10px 0 0 10px">
-<fieldset><legend>{{$q.$_SERVER['REMOTE_ADDR']}}</legend>
-  777777777777777
-</fieldset>
+#.open //////////////////////////////////////////////////////////////////////////////
+<div style="width:calc(100vw - 660px);overflow:auto;height:calc(100vh - 55px)">
+{!$html!}
 </div>
-#.test
+<div style="width:490px">
+  <div class="bg-wx fs16 bg-{{$c}}">{!$h1!}</div>
+  @if('C'==$h1[0])
+  <input size="8" placeholder="type name" onkeyup="my.keyup(this)">
+  <button style="">add</button>
+  ~if
+  <br><br>
+  <a @href(ajax('fs.back',{},'my-files'))>back to table</a>
+</div>
+#.open
 
 #.list //////////////////////////////////////////////////////////////////////////////
 <div id="my-files">
-#.hide.show
-<table width="55%">
+#.hide.back
+<table style="width:calc(100vw - 660px)">
 <tr>
   <th colspan="6" style="text-align:center">MVC Files ({{$sky->d_merc_db ?: 'main'}} database connection)</th>
 </tr>
@@ -19,48 +26,66 @@
   <th>Table</th><th>Controller</th><th>Template</th><th>Model T</th><th>Model M</th><th></th>
 </tr>
 @loop($e_tables)
-@continue($e_tables->func($row->table, $row->col[0]))
+@continue(in_array($row->table, $hidden))
 #.mvc
 <tr>
   <td>{{$row->table}}</td>
-  @loop($row->col[0] as $fs)<td class="@if('-'!=$fs[0])my-file~if@if($fs[1]) bg-g~if">{{$fs[0]}}</td>~loop
-  <td>@if($row->col[1])<a @href(ajax('fs.hide.{{$row->table}}',{},'my-files'))>hide</a>~if</td>
+  @loop($row->col[0] as $fn)<td x="m" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  <td>@if($row->col[1])<a @href(ajax('fs.hide.0.{{$row->table}}',{},'my-files'))>hide</a>~if</td>
 </tr>
 #.mvc
 ~loop
 <tr>
   <td colspan="6" bgcolor="#ffd">Hidden:
     @loop($hidden as $v)
-      @if($_)|~if <a @href(ajax('fs.show.{{$v}}',{},'my-files'))>{{$v}}</a>
+      @if($_)|~if <a @href(ajax('fs.hide.1.{{$v}}',{},'my-files'))>{{$v}}</a>
     ~loop
   </td>
 </tr>
 @loop($e_mvc)@inc(.mvc)~loop
-
 <tr>
-  <td></td>@loop($_ < 4)<td><input size="8" style="display:none"> <a @href()>add new</a></td>~loop
-  <td><button style="display:none">add</button></td>
+  <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
+  @loop($_ < 4)<td> <a @href(ajax('fs.open.{{$_}}.m..{{1==$_?'jet':''}}', {}, 'my-files'))>add new</a></td>~loop<td></td>
 </tr>
 <tr>
   <th colspan="6" style="text-align:center">Other JET Files</th>
 </tr>
-</table>
-
-<br><table width="55%">
+@loop($e_view)
+<tr>
+  @loop($row->row as $fn)<td x="j" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  <td></td>
+</tr>
+~loop
+<tr>
+  <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
+  <td colspan="4"> <a @href(ajax('fs.open.4.j..jet', {}, 'my-files'))>add new</a></td><td></td>
+</tr>
 <tr>
   <th colspan="6" style="text-align:center">Wing3 & other Files</th>
 </tr>
+@loop($e_other)
 <tr>
-  <td></td><td>w3/app.php</td>
-  <td></td><td>-</td><td>-</td><td></td>
+  @loop($row->row as $fn)<td x="p" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  <td></td>
+</tr>
+~loop
+<tr>
+  <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
+  <td colspan="4"> <a @href(ajax('fs.open.5.p', {}, 'my-files'))>add new</a></td><td></td>
 </tr>
 </table>
-<br><br><br>
-@dump(m_fs::$mvc)
-@dump(m_fs::$view)
-@dump(m_fs::$ok)
-<br><br><br>
-#.hide.show
+
+<br>
+<br><br><br><script>my.files()</script>
+#.hide.back
 </div>
 #.list
 
+
+#.test //////////////////////////////////////////////////////////////////////////////
+<div style="padding:10px 0 0 10px">
+<fieldset><legend>{{$q.$_SERVER['REMOTE_ADDR']}}</legend>
+  777777777777777
+</fieldset>
+</div>
+#.test
