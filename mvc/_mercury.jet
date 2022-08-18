@@ -51,6 +51,7 @@
 #.fs //////////////////////////////////////////////////////////////////////////////
 #use(.menu)
 #use(`<h4>MERCURY FILES</h4>` as header)
+@use(`Mercury files` as bottom)
 @inc(_fs.list)
 #.fs.menu ------------------------------------------------------------------------------
 <br><div class="other-task">Mercury</div>

@@ -7,6 +7,8 @@ class mercury_c extends Controller
         SKY::ghost('w', $vars, function ($s) {
             Plan::cfg_p(['mercury', 'mercury_vars'], $s);
         });
+        require Plan::_obj(0)->path . "/mvc/merc.php";
+        new Merc;
     }
 
     function tail_y() {
@@ -39,11 +41,7 @@ class mercury_c extends Controller
     }
 
     function j_info() {
-        $dd = $this->m_db->dd();
-        $x = 'MySQLi' == $dd->name
-            ? pos($dd->sqlf('@show create table `' . $_GET['tbl'] . "`"))
-            : $this->m_db->create($_GET['tbl'], true);
-        echo tag($x, '', 'pre');
+        echo tag($this->m_db->info($_GET['tbl']), '', 'pre');
         return $this->nref = true;
     }
 
@@ -84,16 +82,16 @@ class mercury_c extends Controller
         $in = explode('.', $this->_1);
         MVC::body("$in[0].$in[1]");
         $this->nref = true;
-        $r = call_user_func_array([$this->m_fs, "j_$in[1]"], array_pad(array_slice($in, 2), 5, ''));
+        $r = call_user_func_array([$this->t_fs, "j_$in[1]"], array_pad(array_slice($in, 2), 5, ''));
         return null === $r ? $this->a_fs() : $r;
     }
     # === FILES ======================================================================
     function a_fs() {
         return [
-            'e_mvc' => $this->m_fs->mvc(),
-            'e_view' => $this->m_fs->view(),
-            'e_other' => $this->m_fs->other(),
-            'e_tables' => $this->m_fs->tables($hidden),
+            'e_mvc' => $this->t_fs->mvc(),
+            'e_view' => $this->t_fs->view(),
+            'e_other' => $this->t_fs->other(),
+            'e_tables' => $this->t_fs->tables($hidden),
             'hidden' => $hidden,
         ];
     }

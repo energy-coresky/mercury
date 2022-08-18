@@ -114,4 +114,13 @@ div.my-table[active] {
 #my-files {
   display:flex;
 }
+#my-file {
+  width:calc(100vw - 660px);
+  height:calc(100vh - 55px);
+  overflow:auto;
+}
+
+.my-b {
+  font-weight:bold;
+}
 

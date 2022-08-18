@@ -38,6 +38,14 @@ class m_db extends Model_m
         return $this->dd->sql(SQL::NO_PARSE + 1, $query);
     }
 
+    function info($tbl) {
+        $cnt = $this->dd->sqlf("+select count(*) from `$tbl`");
+        $show = $this->lite
+            ? $this->create($tbl, true)
+            : pos($this->dd->sqlf('@show create table `' . $tbl . "`"));
+        return "rows=$cnt\n$show";
+    }
+
     function create($tbl, $return = false) {
         $struct = $this->struct($tbl, $new);
         $tbl = $return ? $this->q . $tbl . $this->q : $this->q . $new . $this->q;
@@ -124,7 +132,7 @@ class m_db extends Model_m
                     return false;
                 return [
                     'table' => $tbl = array_shift($list),
-                    'col' => $struct ? $this->struct($tbl) : $this->m_fs->fromdb($tbl),
+                    'col' => $struct ? $this->struct($tbl) : $this->t_fs->fromdb($tbl),
                 ];
             },
         ];

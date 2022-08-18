@@ -187,9 +187,16 @@ var my = {
             ajax('fs.open.0.' + rest, {}, 'my-files');
         });
     },
+    kto: 0,
     keyup: (el) => {
         let s = $(el).val();
-        $(el).prev().find('strong').html(s);
+        s = $(el).prev().find('strong').html(s).parent().text();
+        if (my.kto)
+            clearTimeout(my.kto), my.kto = 0;
+        my.kto = setTimeout(() => {
+            //let fn = $('input[placeholder="type name"]').val();
+            ajax('fs.new.' + s, {}, 'my-file');
+        }, 1000)
     }
 };
 

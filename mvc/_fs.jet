@@ -1,7 +1,16 @@
 #.jet core
 
+#.form //////////////////////////////////////////////////////////////////////////////
+<div id="my-file" style="">
+{!$html!}
+</div>
+<div style="width:490px">
+11
+</div>
+#.form
+
 #.open //////////////////////////////////////////////////////////////////////////////
-<div style="width:calc(100vw - 660px);overflow:auto;height:calc(100vh - 55px)">
+<div id="my-file" style="">
 {!$html!}
 </div>
 <div style="width:490px">
@@ -12,13 +21,16 @@
   ~if
   <br><br>
   <a @href(ajax('fs.back',{},'my-files'))>back to table</a>
+  <br><br>
+  <a @href(ajax('fs.form.init.{{$fn}}',{},'my-file'))>add/edit form</a>
+  method=<input>
 </div>
 #.open
 
 #.list //////////////////////////////////////////////////////////////////////////////
 <div id="my-files">
 #.hide.back
-<table style="width:calc(100vw - 660px)">
+<table style="width:calc(100vw - 660px); border-right:3px solid #ccc">
 <tr>
   <th colspan="6" style="text-align:center">MVC Files ({{$sky->d_merc_db ?: 'main'}} database connection)</th>
 </tr>
@@ -27,13 +39,13 @@
 </tr>
 @loop($e_tables)
 @continue(in_array($row->table, $hidden))
-#.mvc
+#.mvc -------------
 <tr>
   <td>{{$row->table}}</td>
-  @loop($row->col[0] as $fn)<td x="m" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  @loop($row->col[0] as $fn)<td x="m" class="{{$e_tables->cls($fn)}}">{{$fn[0]}}</td>~loop
   <td>@if($row->col[1])<a @href(ajax('fs.hide.0.{{$row->table}}',{},'my-files'))>hide</a>~if</td>
 </tr>
-#.mvc
+#.mvc -------------
 ~loop
 <tr>
   <td colspan="6" bgcolor="#ffd">Hidden:
@@ -45,38 +57,50 @@
 @loop($e_mvc)@inc(.mvc)~loop
 <tr>
   <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
-  @loop($_ < 4)<td> <a @href(ajax('fs.open.{{$_}}.m..{{1==$_?'jet':''}}', {}, 'my-files'))>add new</a></td>~loop<td></td>
+  @loop($_ < 4)<td> <a @href(ajax('fs.open.{{$_}}.m..{{1==$_?'jet':''}}', {}, 'my-files'))>add new</a></td>~loop
+  <td></td>
 </tr>
 <tr>
   <th colspan="6" style="text-align:center">Other JET Files</th>
 </tr>
 @loop($e_view)
 <tr>
-  @loop($row->row as $fn)<td x="j" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  @loop($row->row as $fn)<td x="j" class="{{$e_tables->cls($fn)}}">{{$fn[0]}}</td>~loop
   <td></td>
 </tr>
 ~loop
 <tr>
   <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
-  <td colspan="4"> <a @href(ajax('fs.open.4.j..jet', {}, 'my-files'))>add new</a></td><td></td>
+  <td colspan="4"> <a @href(ajax('fs.open.4.j..jet', {}, 'my-files'))>add new</a></td>
+  <td></td>
 </tr>
 <tr>
   <th colspan="6" style="text-align:center">Wing3 & other Files</th>
 </tr>
 @loop($e_other)
 <tr>
-  @loop($row->row as $fn)<td x="p" class="@if('-'!=$fn[0])my-file~if@if($fn[1]) bg-g~if">{{$fn[0]}}</td>~loop
+  @loop($row->row as $fn)<td x="p" class="{{$e_tables->cls($fn)}}">{{$fn[0]}}</td>~loop
   <td></td>
 </tr>
 ~loop
 <tr>
   <td><a @href(ajax('fs.open.9.m', {}, 'my-files'))>add several</a></td>
-  <td colspan="4"> <a @href(ajax('fs.open.5.p', {}, 'my-files'))>add new</a></td><td></td>
+  <td colspan="4"> <a @href(ajax('fs.open.5.p', {}, 'my-files'))>add new</a></td>
+  <td></td>
 </tr>
 </table>
 
-<br>
-<br><br><br><script>my.files()</script>
+<table style="width:490px; ">
+<tr>
+  <th colspan="6" style="text-align:center;height:27px">Wizard info</th>
+</tr>
+<tr>
+  <td>1</td>
+  <td colspan="4">2</td>
+  <td>3</td>
+</tr>
+</table>
+<script>my.files()</script>
 #.hide.back
 </div>
 #.list
