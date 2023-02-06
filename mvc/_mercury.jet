@@ -2,7 +2,7 @@
 
 #.db //////////////////////////////////////////////////////////////////////////////
 #use(.menu)
-#use(`<h4>MERCURY DATABASES ({{count($databases)}}) @inc(.select)</h4>` as header)
+#use(`<h4>MERCURY @view(databases) ({{$driver}})</h4>` as header)
 #use(.merc)
 <div id="merc-db">
 #.create.drop.rename.sort.ac.dc.rc
@@ -23,12 +23,10 @@
 ~loop
 #.create.drop.rename.sort.ac.dc.rc
 </div>
-#.db.select ------------------------------------------------------------------------------
-<select onchange="location.href='?db='+$(this).val()">
-@loop($databases as $one)<option value="{{$one}}"@selected($one==$sky->_2)>{{$one}}</option>~loop
-</select>
-({{$driver}})
-#.select.merc ------------------------------------------------------------------------------
+#.db
+
+
+#.merc ------------------------------------------------------------------------------
 <div class="bg-y bb">
   <label><input type="checkbox"@checked($sky->w_save_migration) onclick="ajax('mig&on='+($(this).is(':checked')?1:0))"> save migration</label>
 </div>

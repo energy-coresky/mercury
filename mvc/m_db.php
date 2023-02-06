@@ -33,8 +33,9 @@ class m_db extends Model_m
 
     function sql(...$in) {
         $query = (string)call_user_func_array('qp', [-2 => $this, -1 => 1] + $in);
+        $pfx = $this->dd->cname ?: 'main';
         if ($this->w_save_migration)
-            Plan::mem_a("migration_" . substr(NOW, 0, 10) . '.sql', "\n" . escape($query));
+            Plan::mem_a("migration_" . substr(NOW, 0, 10) . "_$pfx.sql", "\n" . escape($query));
         return $this->dd->sql(SQL::NO_PARSE + 1, $query);
     }
 

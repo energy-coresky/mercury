@@ -30,12 +30,9 @@ class mercury_c extends Controller
 
     # === DATABASES ==================================================================
     function a_db() {
-        $list = ['main' => 0] + SKY::$databases;
-        unset($list['driver'], $list['pref'], $list['dsn'], $list['']);
-        $this->ajax or $this->d_merc_db = $this->_2 ?: 'main';
+        $this->fly or $this->d_merc_db = $this->_2 ?: 'main';
         return [
             'e_tables' => $this->m_db->tables(),
-            'databases' => array_keys($list),
             'driver' => $this->m_db->dd()->name,
         ];
     }
