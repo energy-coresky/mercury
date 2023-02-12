@@ -16,7 +16,7 @@ class mercury_c extends Controller
             return $this->nref ? null : MVC::instance()->set($this->a_db());
 
         $y = parent::tail_y();
-        $this->k_static = [[], ["~/m/dev.js", "~/m/mercury.js"], ["~/m/dev.css", "~/m/mercury.css"]];
+        $this->_static = [[], ["~/m/dev.js", "~/m/mercury.js"], ["~/m/dev.css", "~/m/mercury.css"]];
         return $y + ['menu' => [
             'wizard' => 'Wizard',
             'db=' . ($this->d_merc_db ?: 'main') => 'Databases',
