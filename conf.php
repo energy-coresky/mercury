@@ -1,14 +1,13 @@
 <?php
 
-$plans = [
+return [
     'view' => ['path' => __DIR__ . '/mvc'],
     'cfg' => ['path' => __DIR__ . '/mvc'],
     'app' => [
         'type' => 'dev',
         'require' => 'SQLite3',
+        'databases' => [
+            '_w' => ['driver' => 'sqlite3', 'dsn' => __DIR__ . '/mercury.base'],
+        ],
     ],
-];
-
-SKY::$databases += [
-    '_w' => ['driver' => 'sqlite3', 'dsn' => __DIR__ . '/mercury.base'],
 ];

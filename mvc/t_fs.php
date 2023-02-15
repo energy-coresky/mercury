@@ -17,7 +17,8 @@ class t_fs extends Model_t
     protected $table = 'tpl';
 
     function head_y() {
-        Plan::_r('conf.php');
+        $conf = Plan::_r('conf.php');
+        SKY::$databases += $conf['app']['databases'];
         return SQL::open('_w');
     }
 
