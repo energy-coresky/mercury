@@ -52,7 +52,7 @@
 @use(`Mercury files` as bottom)
 @inc(_fs.list)
 #.fs.menu ------------------------------------------------------------------------------
-<br><div class="other-task">Mercury</div>
+<br><div class="other-task">Mercury <span style="position:relative;left:70px;font-size:22px">☿</span></div>
 @loop($y_menu as $uri => $name)
   <a href="_mercury?{{$uri}}" class="inner-menu"@active(explode('=',$uri)[0] == $sky->_1)>{{$name}}</a>
 ~loop
