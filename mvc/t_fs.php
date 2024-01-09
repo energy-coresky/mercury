@@ -16,12 +16,6 @@ class t_fs extends Model_t
 
     protected $table = 'tpl';
 
-    function head_y() {
-        $conf = Plan::_r('conf.php');
-        SKY::$databases += $conf['app']['databases'];
-        return SQL::open('_w');
-    }
-
     function fromdb($tbl) {
         self::$tables[] = $tbl = $this->m_db->cut_pref($tbl);
         $list = [];

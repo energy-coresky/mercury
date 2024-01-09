@@ -7,8 +7,8 @@ class mercury_c extends Controller
         SKY::ghost('w', $vars, function ($s) {
             Plan::cfg_p(['mercury', 'mercury_vars'], $s);
         });
-        require Plan::_obj(0)->path . "/mvc/merc.php";
-        new Merc;
+        #require Plan::_obj(0)->path . "/mvc/merc.php";
+        #new Merc;
     }
 
     function tail_y() {
@@ -19,7 +19,7 @@ class mercury_c extends Controller
         $this->_static = [[], ["~/m/dev.js", "~/m/mercury.js"], ["~/m/dev.css", "~/m/mercury.css"]];
         return $y + ['menu' => [
             'wizard' => 'Wizard',
-            'db=' . ($this->d_merc_db ?: 'main') => 'Databases',
+            'db=' . ($this->d_merc_db ?: 'main::core') => 'Databases',
             'fs' => 'Files',
         ]];
     }
@@ -30,7 +30,7 @@ class mercury_c extends Controller
 
     # === DATABASES ==================================================================
     function a_db() {
-        $this->fly or $this->d_merc_db = $this->_2 ?: 'main';
+        $this->fly or $this->d_merc_db = $this->_2 ?: 'main::core';
         return [
             'e_tables' => $this->m_db->tables(),
             'driver' => $this->m_db->dd()->name,

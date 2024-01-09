@@ -3,8 +3,8 @@
 class m_db extends Model_m
 {
     function head_y() {
-        $name = 'main' == $this->d_merc_db ? '' : $this->d_merc_db;
-        $dd = SQL::open($name);
+        [$ware, $name] = explode('::', $this->d_merc_db ?: 'main::core');
+        $dd = SQL::open($name, $ware);
         $this->q = $dd->quote;
         $this->lite = $dd->name == 'SQLite3';
         return $dd;
