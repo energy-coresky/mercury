@@ -25,7 +25,7 @@ class mercury_c extends Controller
     }
 
     function a_ware() {
-        jump('_mercury?db=' . ($this->d_merc_db ?: 'main'));
+        jump('_mercury?db=' . ($this->d_merc_db ?: 'main::core'));
     }
 
     # === DATABASES ==================================================================
