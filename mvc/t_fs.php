@@ -146,7 +146,7 @@ class t_fs extends Model_t
     function j_new($fn, $ext) {
         $app = 'jet' != $ext;
         $code = $this->gen("$fn.$ext");
-        echo $app ? Display::php($code) : Display::jet($code);
+        echo $app ? Show::php($code) : Show::jet($code);
     }
 
     function j_open($type, $x, $fn, $ext) {
@@ -174,7 +174,7 @@ class t_fs extends Model_t
             $code = $test ? file_get_contents($test) : $this->gen($fn0);
         }
         return [
-            'html' => $app ? Display::php($code) : Display::jet($code),
+            'html' => $app ? Show::php($code) : Show::jet($code),
             'h1' => $h1,
             'fn' => $fn0,
             'c' => 'C' == $h1[0] ? 'y' : ('E' == $h1[0] ? 'g' : 'r'),
